@@ -68,9 +68,9 @@ if(!function_exists('is_current_route')) {
    * 
    * @return \Illuminate\Http\Response $route_object.
    */
-  if (!function_exists('dashboard_route_name')) {
-    function dashboard_route_name($route = 'welcome', $data=[])
+  if (!function_exists('admin_route_name')) {
+    function admin_route_name($route = 'welcome', $data=[])
     {
-        return route('dashboard.' . $route, $data);
+        return route('admin.' . $route, $data);
     }
 }

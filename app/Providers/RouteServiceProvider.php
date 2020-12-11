@@ -14,8 +14,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $dashboard_namespace = 'App\Http\Controllers\Dashboard';
-    protected $website_namespace = 'App\Http\Controllers\Website';
+    protected $namespace = 'App\Http\Controllers';
+    protected $dashboard_namespace = 'App\Http\Controllers\Admin';
 
     /**
      * The path to the "home" route for your application.
@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
-    public const Dashboard = '/dashboard';
+    public const ADMIN = '/admin';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -48,7 +48,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         
-        $this->mapDashboardRoutes();
+        $this->mapAdminRoutes();
         //
     }
 
@@ -62,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->website_namespace)
+             ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
 
@@ -73,11 +73,13 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapDashboardRoutes()
+    protected function mapAdminRoutes()
     {
-        Route::middleware('web')
+        Route::name('admin.')
+             ->prefix('admin')
+             ->middleware('web')
              ->namespace($this->dashboard_namespace)
-             ->group(base_path('routes/dashboard.php'));
+             ->group(base_path('routes/admin.php'));
     }
 
     /**
