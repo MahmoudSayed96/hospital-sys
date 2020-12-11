@@ -1,6 +1,6 @@
 <!-- Main CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css/main.css')}}">
-<!-- Font-icon css-->
-<link rel="stylesheet" type="text/css" href="">
+<!-- Font-Awesome V5.15css-->
+<link rel="stylesheet" type="text/css" href="{{asset('dashboard/css/all.min.css')}}">
 
 @stack('styles')
