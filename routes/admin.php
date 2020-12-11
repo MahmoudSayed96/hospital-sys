@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('admin.welcome');
+Route::group(['middleware' => ['auth','admin']], function () {
+    Route::get('/', function () {
+        return view('admin.welcome');
+    });
 });
