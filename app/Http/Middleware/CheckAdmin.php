@@ -17,15 +17,11 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            // If user not an admin redirect to home.
-            if(!$user->hasRole('super_admin') || !$user->hasRole('doctor')) {
-                return redirect(RouteServiceProvider::HOME); 
-            }
-            return $next($request);  
-        } else {
-            return redirect(RouteServiceProvider::HOME);
+        $user = Auth::user();
+        // If user an admin redirect to dashboard.
+        if($user->hasRole('admin') || $user->hasRole('doctor')) {
+            return redirect(RouteServiceProvider::DASHBOARD); 
         }
+        return $next($request);  
     }
 }

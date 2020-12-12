@@ -13,12 +13,14 @@ class UsersTableSeeder extends Seeder
     {
         $admin = \App\User::create([
             'name'=>'Admin',
-            'email' => 'super_admin@app.com',
+            'username'=>'admin',
+            'email' => 'admin@app.com',
             'password' => bcrypt('admin@123')
         ]);
-        $admin->attachRole('super_admin');
+        $admin->attachRole('admin');
         $user = \App\User::create([
             'name'=>'Doctor',
+            'username'=>'doctor',
             'email' => 'doctor@app.com',
             'password' => bcrypt('doctor@123')
         ]);
