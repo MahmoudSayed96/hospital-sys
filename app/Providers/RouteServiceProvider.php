@@ -24,6 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
     public const DASHBOARD = '/admin';
+    public const PAGINATION_LIMIT = 10;
 
     /**
      * Define your route model bindings, pattern filters, etc.

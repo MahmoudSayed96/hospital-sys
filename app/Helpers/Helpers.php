@@ -9,14 +9,11 @@
 
 if(!function_exists('is_current_route')) {
     /**
-     * @param $route 
+     * @param $routeName ex.departments 
      *  @return bool
      */
-     function is_current_route($route) {
-        if(request()->route()->getName == $route)
-          return true;
-  
-         return false;
+     function is_current_route($route_name = '') {
+       return NULL !== request()->segment(2) && request()->segment(2) == $route_name ? true : false;
      }
   }
   
@@ -66,10 +63,27 @@ if(!function_exists('is_current_route')) {
    * Route name 'sections.index'
    * @param $data.
    * 
-   * @return \Illuminate\Http\Response $route_object.
+   * @return String
    */
   if (!function_exists('admin_route_name')) {
     function admin_route_name($route = 'welcome', $data=[])
+    {
+        return 'admin.' . $route;
+    }
+  }
+
+  /**
+   * Get dashboard route name.
+   * Change dashboard/admin prefix name from one place.
+   * 
+   * @param $route.
+   * Route name 'sections.index'
+   * @param $data.
+   * 
+   * @return \Illuminate\Http\Response $route_object.
+   */
+  if (!function_exists('admin_route')) {
+    function admin_route($route = 'welcome', $data=[])
     {
         return route('admin.' . $route, $data);
     }

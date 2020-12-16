@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 
-class AdminController extends BaseController
+class AdminController extends Controller
 {
-    protected $model_folder = '';
     protected $view_name = 'welcome';
     
-    public function __construct(User $model)
+    public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index() {
+        return view('admin.welcome');
     }
 }

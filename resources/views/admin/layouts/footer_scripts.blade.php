@@ -6,53 +6,59 @@
 <!-- The javascript plugin to display page loading on top-->
 <script src="{{asset('dashboard/js/plugins/pace.min.js')}}"></script>
 <!-- Page specific javascripts-->
-<script type="text/javascript" src="{{asset('dashboard/js/plugins/chart.js')}}"></script>
-<script type="text/javascript">
-    var data = {
-   labels: ["January", "February", "March", "April", "May"],
-   datasets: [
-       {
-           label: "My First dataset",
-           fillColor: "rgba(220,220,220,0.2)",
-           strokeColor: "rgba(220,220,220,1)",
-           pointColor: "rgba(220,220,220,1)",
-           pointStrokeColor: "#fff",
-           pointHighlightFill: "#fff",
-           pointHighlightStroke: "rgba(220,220,220,1)",
-           data: [65, 59, 80, 81, 56]
-       },
-       {
-           label: "My Second dataset",
-           fillColor: "rgba(151,187,205,0.2)",
-           strokeColor: "rgba(151,187,205,1)",
-           pointColor: "rgba(151,187,205,1)",
-           pointStrokeColor: "#fff",
-           pointHighlightFill: "#fff",
-           pointHighlightStroke: "rgba(151,187,205,1)",
-           data: [28, 48, 40, 19, 86]
-       }
-   ]
-};
-var pdata = [
-   {
-       value: 300,
-       color: "#46BFBD",
-       highlight: "#5AD3D1",
-       label: "Complete"
-   },
-   {
-       value: 50,
-       color:"#F7464A",
-       highlight: "#FF5A5E",
-       label: "In-Progress"
-   }
-]
+<script src="{{asset('dashboard/js/plugins/chart.js')}}"></script>
+<!-- Sweet Alert -->
+<script src="{{asset('dashboard/js/plugins/sweetalert.min.js')}}"></script>
+<!-- Notify Alert -->
+<script src="{{asset('dashboard/js/plugins/bootstrap-notify.min.js')}}"></script>
+@if (session()->has('message'))
+<script>
+    // Notify alerts.
+    $.notify(
+        {
+            title: "Success: ",
+            message: "{{session()->get('message')}}",
+            icon:
+                " {{ session()->get('messageType') == 'success' ? 'fa fa-check' : 'fa fa-exclamation-triangle'}}"
+        },
+        {
+            type: '{{ session()->get("messageType") == "error" ? "danger" : "success" }}',
+            placement: {
+                from: "top",
+                align: "right"
+            }
+        }
+    );
+</script>
+@endif
 
-var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-var lineChart = new Chart(ctxl).Line(data);
-
-var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-var pieChart = new Chart(ctxp).Pie(pdata);
+{{-- Delete Action --}}
+<script>
+    $('.delete').click(function(e){
+        e.preventDefault();
+        var button = $(this);
+        var id = button.data('id');
+        console.log(button.data('id'));
+        swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this data!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                dangerMode: true,
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $('#delete-form-'+id).submit();
+      		    }    
+            });
+    });
 </script>
 
 @stack('scripts')
+
+<!-- Custom javaScript code -->
+<script src="{{asset('dashboard/js/custom.js')}}"></script>

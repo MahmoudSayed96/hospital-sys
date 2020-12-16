@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Requests\Admin\Department\StoreDepartmentRequest;
+use App\Http\Requests\Admin\Department\UpdateDepartmentRequest;
+use App\Models\Department;
+use Exception;
+
+class DepartmentController extends BaseController
+{
+    protected $model_folder = 'departments';
+
+    public function __construct(Department $model)
+    {
+        parent::__construct($model);
+    }
+
+    public function store(StoreDepartmentRequest $request){
+        try {
+            $this->model->create([
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'status'        => $request->status,
+            ]);
+            return $this->redirectIfSuccess(admin_route_name('departments.index'));
+        } catch (\Throwable $th) {
+            return $this->redirectIfError(admin_route_name('departments.create'), null);
+        }
+    }
+
+    public function update(UpdateDepartmentRequest $request){
+        try {
+            $row = $this->model->find($request->id);
+            if(!$row) {
+                return $this->redirectIfNotFound(admin_route_name('departments.index'));
+            }
+            $row->update([
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'status'        => $request->status,
+            ]);
+            return $this->redirectIfSuccess(admin_route_name('departments.index'), $row->name . ' Updated Successfully.');
+        } catch (\Exception $ex) {
+            return $this->redirectIfError(admin_route_name('departments.index'));
+        }
+    }
+    
+}
