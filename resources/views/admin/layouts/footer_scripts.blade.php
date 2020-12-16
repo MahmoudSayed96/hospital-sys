@@ -11,6 +11,10 @@
 <script src="{{asset('dashboard/js/plugins/sweetalert.min.js')}}"></script>
 <!-- Notify Alert -->
 <script src="{{asset('dashboard/js/plugins/bootstrap-notify.min.js')}}"></script>
+<!-- Date picker-->
+<script src="{{asset('dashboard/js/plugins/bootstrap-datepicker.min.js')}}"></script>
+<!-- dropzone files -->
+<script src="{{asset('js/plugins/dropzone.js')}}"></script>
 @if (session()->has('message'))
 <script>
     // Notify alerts.
@@ -34,6 +38,7 @@
 
 {{-- Delete Action --}}
 <script>
+    // Swweet alert.
     $('.delete').click(function(e){
         e.preventDefault();
         var button = $(this);
@@ -56,6 +61,13 @@
       		    }    
             });
     });
+
+    // Date picker.
+    $('#demoDate').datepicker({
+      	format: "dd/mm/yyyy",
+      	autoclose: true,
+      	todayHighlight: true
+      });
 </script>
 
 @stack('scripts')

@@ -26,22 +26,20 @@
                         </a>
                 </li>
 
+                {{-- Settings --}}
                 <li class="treeview">
-                        <a class="app-menu__item" href="#" data-toggle="treeview">
-                                <i class="fas fa-bezier-curve app-menu__icon"></i>
-                                <span class="app-menu__label">Departments</span>
+                        <a class="app-menu__item {{is_current_route('settings')? 'active':''}}" href="javascript:;"
+                                data-toggle="treeview">
+                                <i class="fas fa-cog app-menu__icon"></i>
+                                <span class="app-menu__label">Settings</span>
                                 <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                                <li><a class="treeview-item" href="bootstrap-components.html"><i
-                                                        class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
-                                <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/"
-                                                target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font
-                                                Icons</a></li>
-                                <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i>
-                                                Cards</a></li>
-                                <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i>
-                                                Widgets</a></li>
+                                <li>
+                                        <a class="treeview-item" href="{{admin_route('settings.index')}}">
+                                                <i class="far fa-circle icon"></i> Site
+                                        </a>
+                                </li>
                         </ul>
                 </li>
         </ul>
