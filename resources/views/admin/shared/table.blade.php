@@ -1,6 +1,18 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
+            <div class="tile-header d-flex mb-4">
+                <div class="excel-btns ml-auto">
+                    <a href="{{$export_xlsx_route}}" class="btn btn-dark ">
+                        <i class="fas fa-file-download fa-lg mr-1"></i>
+                        Export XLSX
+                    </a>
+                    <a href="{{$export_csv_route}}" class="btn btn-dark">
+                        <i class="fas fa-file-download fa-lg mr-1"></i>
+                        Export CSV
+                    </a>
+                </div>
+            </div>
             <div class="tile-body">
                 <div class="table-responsive">
                     {{$slot}}

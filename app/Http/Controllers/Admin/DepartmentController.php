@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DepartmentsExport;
 use App\Http\Requests\Admin\Department\StoreDepartmentRequest;
 use App\Http\Requests\Admin\Department\UpdateDepartmentRequest;
 use App\Models\Department;
-use Exception;
 
 class DepartmentController extends BaseController
 {
     protected $model_folder = 'departments';
 
-    public function __construct(Department $model)
+    public function __construct(Department $model, DepartmentsExport $model_export)
     {
-        parent::__construct($model);
+        parent::__construct($model, $model_export);
     }
 
     public function store(StoreDepartmentRequest $request){
@@ -24,7 +24,7 @@ class DepartmentController extends BaseController
                 'status'        => $request->status,
             ]);
             return $this->redirectIfSuccess(admin_route_name('departments.index'));
-        } catch (\Throwable $th) {
+        } catch (\Exception $ex) {
             return $this->redirectIfError(admin_route_name('departments.create'), null);
         }
     }

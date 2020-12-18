@@ -6,21 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Traits\RedirectMessagesTrait;
 use App\Traits\UploadImagesTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class BaseController extends Controller
 {
     use UploadImagesTrait,RedirectMessagesTrait;
     
     protected $model;
+    protected $model_export;
     protected $views_folder = 'admin';
     protected $model_folder = '';
     protected $view_name;
 
-    public function __construct(Model $model)
+    public function __construct(Model $model, $model_export)
     {
         
         $this->model = $model;
+        $this->model_export = $model_export;
     }
 
     public function index()
@@ -54,5 +59,36 @@ class BaseController extends Controller
         } catch (\Exception $ex) {
             return $this->redirectIfError(admin_route_name('departments.index'));
         }
+    }
+
+    /**
+     * Export as XLSX sheet.
+     */
+    public function exportAsXlsx() {
+        return Excel::download($this->model_export, $this->getExportFileName('xlsx'));
+    }
+
+    /**
+     * Export as CSV sheet.
+     */
+    public function exportAsCsv() {
+        return Excel::download($this->model_export, $this->getExportFileName('csv'));    
+    }
+
+    /**
+     * Get export file name.
+     */
+    protected function getExportFileName($format = 'xlsx') {
+        return strtolower($this->get_model() . 's') . '_' . Carbon::now()->format('Y-m-d') . '.' . $format;
+    }
+
+    /**
+     * Get model name.
+     */
+    protected function get_model() {
+        $obj = get_class($this->model);
+        $arr = explode('\\', $obj);
+        $length = sizeof($arr);
+        return $arr[$length - 1];
     }
 }

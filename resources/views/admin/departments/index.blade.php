@@ -26,7 +26,10 @@
 @include('admin.shared._messages')
 
 {{-- Table --}}
-@component('admin.shared.table')
+@component('admin.shared.table', [
+'export_xlsx_route' => admin_route('departments.export_xlsx'),
+'export_csv_route' => admin_route('departments.export_csv'),
+])
 <table class="table table-hover table-bordered text-center" id="sampleTable">
     <thead>
         <tr>
