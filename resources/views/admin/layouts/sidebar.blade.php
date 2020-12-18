@@ -21,8 +21,16 @@
                 <li>
                         <a class="app-menu__item {{is_current_route('departments')? 'active':''}}"
                                 href="{{admin_route('departments.index')}}">
-                                <i class="fas fa-bezier-curve app-menu__icon"></i>
+                                <i class="fas fa-hospital-user app-menu__icon"></i>
                                 <span class="app-menu__label">Departments</span>
+                        </a>
+                </li>
+                {{-- Specialists --}}
+                <li>
+                        <a class="app-menu__item {{is_current_route('specialists')? 'active':''}}"
+                                href="{{admin_route('specialists.index')}}">
+                                <i class="fas fa-stethoscope app-menu__icon"></i>
+                                <span class="app-menu__label">Specialists</span>
                         </a>
                 </li>
 

@@ -13,7 +13,7 @@
 <!-- Date picker-->
 <script src="{{asset('dashboard/js/plugins/bootstrap-datepicker.min.js')}}"></script>
 
-@if (session()->has('message'))
+@if((session()->has('message')))
 <script>
     // Notify alerts.
     $.notify(

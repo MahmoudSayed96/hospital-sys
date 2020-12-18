@@ -1,26 +1,17 @@
 @extends('admin.layouts.master')
 
-@section('title','Departments')
+@section('title','Specialists')
 
 @php
-$model = 'departments';
+$model = 'specialists';
 @endphp
-
 @section('content')
 
 @component('admin.shared.breadcrumb',[
-'title' => 'Departments',
-'icon' => 'fas fa-hospital-user',
-'description' => 'List of departments in hospital.',
-'active_action' => 'Departments',
-])
-@endcomponent
-
-
-{{-- Butttons --}}
-@component('admin.shared.buttons.header_btns',[
-'add_btn_text'=>'Add Department',
-'add_btn_route' => admin_route($model . '.create')
+'title' => 'Specialists',
+'icon' => 'fas fa-stethoscope',
+'description' => 'List of specialists in hospital.',
+'active_action' => 'Specialists',
 ])
 @endcomponent
 
@@ -28,6 +19,9 @@ $model = 'departments';
 @include('admin.shared._errors')
 {{-- Messages --}}
 @include('admin.shared._messages')
+
+{{-- Create form --}}
+@include('admin.specialists._create')
 
 {{-- Table --}}
 @component('admin.shared.table', [
@@ -38,8 +32,7 @@ $model = 'departments';
     <thead>
         <tr>
             <th>#</th>
-            <th>Department</th>
-            <th>Status</th>
+            <th>Specialist</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -49,28 +42,20 @@ $model = 'departments';
         <tr>
             <td>{{$index + 1}}</td>
             <td>{{$row->name}}</td>
-            <td>
-                <strong
-                    class="px-3 py-1 badge alert-success border border-success @if($row->status == 0) border-danger alert-danger @endif">
-                    {{$row->getStatus()}}
-                </strong>
-            </td>
             <td class="d-flex align-items-center justify-content-around">
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="View Department">
+                <span class="d-block" data-toggle="tooltip" data-placement="top" title="View Specialist">
                     <a href="javascript:;" class="text-primary" type="button" data-toggle="modal"
-                        data-target="#showModal" data-name="{{$row->name}}" data-description="{{$row->description}}"
-                        data-status="{{$row->getStatus()}}">
+                        data-target="#showModal" data-name="{{$row->name}}">
                         <i class="icon fas fa-eye fa-w fa-lg"></i>
                     </a>
                 </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Edit Department">
+                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Edit Specialist">
                     <a href="javascript:;" class="text-secondary" type="button" data-toggle="modal"
-                        data-target="#editModal" data-id="{{$row->id}}" data-name="{{$row->name}}"
-                        data-description="{{$row->description}}" data-status="{{$row->status}}">
+                        data-target="#editModal" data-id="{{$row->id}}" data-name="{{$row->name}}">
                         <i class="icon fas fa-pencil-alt fa-w fa-lg"></i>
                     </a>
                 </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Delete Department">
+                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Delete Specialist">
                     <a href="javascript:;" class="delete text-danger text-md" data-id="{{$row->id}}">
                         <i class="icon fas fa-trash fa-lg"></i>
                         <form action="{{admin_route($model . '.destroy', $row->id)}}" class="d-none" method="post"

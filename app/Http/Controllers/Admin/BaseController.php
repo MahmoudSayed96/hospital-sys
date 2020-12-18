@@ -52,12 +52,12 @@ class BaseController extends Controller
         try {
             $row = $this->model->find($id);
             if(!$row) {
-                return $this->redirectIfNotFound(admin_route_name('departments.index'));
+                return $this->redirectIfNotFound(admin_route_name($this->model_folder . '.index'));
             }
             $row->delete();
-            return $this->redirectIfSuccess(admin_route_name('departments.index'),'Data Deleted Successfully.');
+            return $this->redirectIfSuccess(admin_route_name($this->model_folder . '.index'),'Data Deleted Successfully.');
         } catch (\Exception $ex) {
-            return $this->redirectIfError(admin_route_name('departments.index'));
+            return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
         }
     }
 

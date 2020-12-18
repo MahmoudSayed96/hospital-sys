@@ -23,9 +23,9 @@ class DepartmentController extends BaseController
                 'description'   => $request->description,
                 'status'        => $request->status,
             ]);
-            return $this->redirectIfSuccess(admin_route_name('departments.index'));
+            return $this->redirectIfSuccess(admin_route_name($this->model_folder . '.index'), $request->name . ' Created Successfully.');
         } catch (\Exception $ex) {
-            return $this->redirectIfError(admin_route_name('departments.create'), null);
+            return $this->redirectIfError(admin_route_name($this->model_folder . '.create'), null);
         }
     }
 
@@ -33,16 +33,16 @@ class DepartmentController extends BaseController
         try {
             $row = $this->model->find($request->id);
             if(!$row) {
-                return $this->redirectIfNotFound(admin_route_name('departments.index'));
+                return $this->redirectIfNotFound(admin_route_name($this->model_folder . '.index'));
             }
             $row->update([
                 'name'          => $request->name,
                 'description'   => $request->description,
                 'status'        => $request->status,
             ]);
-            return $this->redirectIfSuccess(admin_route_name('departments.index'), $row->name . ' Updated Successfully.');
+            return $this->redirectIfSuccess(admin_route_name($this->model_folder . '.index'), $row->name . ' Updated Successfully.');
         } catch (\Exception $ex) {
-            return $this->redirectIfError(admin_route_name('departments.index'));
+            return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
         }
     }
     

@@ -21,11 +21,12 @@ class DepartmentsTableSeeder extends Seeder
             'Also called intensive care, this department is for seriously ill patients'
         ];
         for($i=0; $i < count($departments_names); $i++) {
-            \App\Models\Department::create([
+            $departments[] = [
                 'name' => $departments_names[$i],
                 'description' => $departments_desc[$i],
                 'status' => 1
-            ]);
+            ];
         }
+        \App\Models\Department::insert($departments);
     }
 }
