@@ -1,16 +1,13 @@
 @extends('admin.layouts.master')
 @section('title','Dashboard')
 @section('content')
-<div class="app-title">
-    <div>
-        <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
-        <p>A free and open source Bootstrap 4 admin template</p>
-    </div>
-    <ul class="app-breadcrumb breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-    </ul>
-</div>
+
+@component('admin.shared.breadcrumb',[
+'title' => 'Dashboard',
+'icon' => 'fas fa-tachometer-alt',
+'description' => 'Main admin control panel.'
+])
+@endcomponent
 <div class="row">
     <div class="col-md-6 col-lg-3">
         <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>

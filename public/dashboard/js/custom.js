@@ -1,9 +1,21 @@
 $(function() {
     "use strict";
-    // Enable tooltips.
-    $(function() {
-        $('[data-toggle="tooltip"]').tooltip();
+
+    // Date picker.
+    $("#demoDate").datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true
     });
+    // Preview image before upload.
+    // Image preview
+    $("#imgInp").change(function() {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $("#imgPreview").attr("src", e.target.result);
+        };
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+    }); //end of image preview
 
     var data = {
         labels: ["January", "February", "March", "April", "May"],

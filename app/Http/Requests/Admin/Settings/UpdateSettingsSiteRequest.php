@@ -25,7 +25,10 @@ class UpdateSettingsSiteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'site_name'  => ['required', 'min:3', 'max:50'],
+            'site_logo'  => ['image', 'mimes:jpeg,jpg,png', 'max:2000'],
+            'site_email' => ['email', 'max:100'],
+            'status'     => ['required', 'in:1,0']
         ];
     }
 }

@@ -2,7 +2,6 @@
 <script src="{{asset('dashboard/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('dashboard/js/popper.min.js')}}"></script>
 <script src="{{asset('dashboard/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('dashboard/js/main.js')}}"></script>
 <!-- The javascript plugin to display page loading on top-->
 <script src="{{asset('dashboard/js/plugins/pace.min.js')}}"></script>
 <!-- Page specific javascripts-->
@@ -13,17 +12,16 @@
 <script src="{{asset('dashboard/js/plugins/bootstrap-notify.min.js')}}"></script>
 <!-- Date picker-->
 <script src="{{asset('dashboard/js/plugins/bootstrap-datepicker.min.js')}}"></script>
-<!-- dropzone files -->
-<script src="{{asset('js/plugins/dropzone.js')}}"></script>
+
 @if (session()->has('message'))
 <script>
     // Notify alerts.
     $.notify(
         {
-            title: "Success: ",
+            title: '{{ session()->get("messageType") == "error" ? "Error: " : "Success: " }}',
             message: "{{session()->get('message')}}",
             icon:
-                " {{ session()->get('messageType') == 'success' ? 'fa fa-check' : 'fa fa-exclamation-triangle'}}"
+                " {{ session()->get('messageType') == 'success' ? 'fas fa-check' : 'fas fa-exclamation-triangle'}}"
         },
         {
             type: '{{ session()->get("messageType") == "error" ? "danger" : "success" }}',
@@ -61,16 +59,9 @@
       		    }    
             });
     });
-
-    // Date picker.
-    $('#demoDate').datepicker({
-      	format: "dd/mm/yyyy",
-      	autoclose: true,
-      	todayHighlight: true
-      });
 </script>
 
 @stack('scripts')
-
-<!-- Custom javaScript code -->
+<script src="{{asset('dashboard/js/main.js')}}"></script>
+<!-- Custom code -->
 <script src="{{asset('dashboard/js/custom.js')}}"></script>

@@ -6,13 +6,16 @@
 
 @component('admin.shared.breadcrumb',[
 'title' => 'Settings',
+'icon' => 'fas fa-cog',
 'description' => 'Global site settings.',
 'active_action' => 'Settings',
 ])
 @endcomponent
 
-{{-- Errors Messages --}}
+{{-- Messages --}}
 @include('admin.shared._errors')
+{{-- Messages --}}
+@include('admin.shared._messages')
 
 <div class="row user">
     <div class="col-md-3">

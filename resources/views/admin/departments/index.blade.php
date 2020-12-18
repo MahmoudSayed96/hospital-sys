@@ -6,6 +6,7 @@
 
 @component('admin.shared.breadcrumb',[
 'title' => 'Departments',
+'icon' => '',
 'description' => 'List of departments in hospital.',
 'active_action' => 'Departments',
 ])
@@ -19,8 +20,10 @@
 ])
 @endcomponent
 
-{{-- Errors Messages --}}
+{{-- Messages --}}
 @include('admin.shared._errors')
+{{-- Messages --}}
+@include('admin.shared._messages')
 
 {{-- Table --}}
 @component('admin.shared.table')

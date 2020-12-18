@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    protected $guarded = [];
     // Active records.
     public function scopeActive($query) {
         return $query->where('status' , 1);

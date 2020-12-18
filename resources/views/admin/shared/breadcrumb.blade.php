@@ -1,6 +1,15 @@
 <div class="app-title">
     <div>
-        <h1><i class="fas fa-th-list"></i> @isset($title) {{$title}} @endisset</h1>
+        <h1>
+            @isset($icon)
+            @if($icon != '')
+            <i class="{{$icon}}"></i>
+            @else
+            <i class="fas fa-th-list"></i>
+            @endif
+            @endisset
+            @isset($title) {{$title}} @endisset
+        </h1>
         <p>@isset($description) {{$description}} @endisset</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">

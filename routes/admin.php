@@ -15,6 +15,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('departments/{id}/delete', 'DepartmentController@destroy')->name('departments.destroy');
     ######################### Settings ########################################################
     Route::get('settings', 'SettingsSiteController@index')->name('settings.index');
-    Route::post('settings/site/update', 'SettingsSiteController@update_site')->name('settings.site.update');
+    Route::post('settings/site/update', 'SettingsSiteController@update')->name('settings.site.update');
     
 });
