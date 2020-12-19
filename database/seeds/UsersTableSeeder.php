@@ -15,15 +15,19 @@ class UsersTableSeeder extends Seeder
             'name'=>'Admin',
             'username'=>'admin',
             'email' => 'admin@app.com',
-            'password' => bcrypt('admin@123')
+            'password' => bcrypt('admin@123'),
+            'department_id' => 1, 
+            'specialist_id' => 1,
+            'salary' => 10000,
+            'phone' => ''
         ]);
         $admin->attachRole('admin');
-        $user = \App\User::create([
-            'name'=>'Doctor',
-            'username'=>'doctor',
-            'email' => 'doctor@app.com',
-            'password' => bcrypt('doctor@123')
-        ]);
-        $user->attachRole('doctor');
+        // $user = \App\User::create([
+        //     'name'=>'Doctor',
+        //     'username'=>'doctor',
+        //     'email' => 'doctor@app.com',
+        //     'password' => bcrypt('doctor@123')
+        // ]);
+        // $user->attachRole('doctor');
     }
 }

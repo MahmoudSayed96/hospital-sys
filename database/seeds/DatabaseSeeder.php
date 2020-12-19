@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(LaratrustSeeder::class);
-        $this->call(UsersTableSeeder::class);
         $this->call(DepartmentsTableSeeder::class);
         $this->call(SpecialistsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
     }
 }
