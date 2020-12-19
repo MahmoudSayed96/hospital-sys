@@ -10,7 +10,7 @@ class SettingsSiteController extends BaseController
 
     public function __construct(Setting $model)
     {
-        parent::__construct($model);
+        parent::__construct($model, null);
     }
 
     public function index()
