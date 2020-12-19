@@ -3,14 +3,18 @@
         <div class="tile">
             <div class="tile-header d-flex mb-4">
                 <div class="excel-btns ml-auto">
+                    @isset($export_xlsx_route)
                     <a href="{{$export_xlsx_route}}" class="btn btn-dark ">
                         <i class="fas fa-file-download fa-lg mr-1"></i>
                         Export XLSX
                     </a>
+                    @endisset
+                    @isset($export_csv_route)
                     <a href="{{$export_csv_route}}" class="btn btn-dark">
                         <i class="fas fa-file-download fa-lg mr-1"></i>
                         Export CSV
                     </a>
+                    @endisset
                 </div>
             </div>
             <div class="tile-body">

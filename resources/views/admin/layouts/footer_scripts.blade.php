@@ -31,5 +31,7 @@
     );
 </script>
 @endif
+
+@stack('scripts')
 <!-- Custom code -->
 <script src="{{asset('dashboard/js/custom.js')}}"></script>

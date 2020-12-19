@@ -16,7 +16,8 @@ class SettingsSiteController extends BaseController
     public function index()
     {
         $row = $this->model::first();
-        return view('admin.settings.index', compact('row'));
+        $backupFiles = BackUpController::getBackupFiles();
+        return view('admin.settings.index', compact('row', 'backupFiles'));
     }
 
     public function update(UpdateSettingsSiteRequest $request) {

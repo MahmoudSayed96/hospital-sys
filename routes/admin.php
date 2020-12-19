@@ -33,5 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     ############################### Settings ########################################################
     Route::get('settings', 'SettingsSiteController@index')->name('settings.index');
     Route::post('settings/site/update', 'SettingsSiteController@update')->name('settings.site.update');
+    Route::get('settings/backups/{file}/download', 'BackUpController@download')->name('settings.backups.download');
+    Route::post('settings/backups/{file}/delete', 'BackUpController@destroy')->name('settings.backups.destroy');
     
 });
