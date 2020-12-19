@@ -34,6 +34,24 @@
                         </a>
                 </li>
 
+                {{-- Inventory --}}
+                <li class="treeview">
+                        <a class="app-menu__item {{is_current_route('inventory')? 'active':''}}" href="javascript:;"
+                                data-toggle="treeview">
+                                <i class="fas fa-warehouse app-menu__icon"></i>
+                                <span class="app-menu__label">Inventory</span>
+                                <i class="treeview-indicator fa fa-angle-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                                <li class="treeview">
+                                        <a class="treeview-item" href="{{admin_route('stocks.index')}}">
+                                                <i class="fas fa-dolly-flatbed icon"></i> Stocks
+                                        </a>
+                                </li>
+
+                        </ul>
+                </li>
+
                 {{-- Settings --}}
                 <li class="treeview">
                         <a class="app-menu__item {{is_current_route('settings')? 'active':''}}"
@@ -42,21 +60,5 @@
                                 <span class="app-menu__label">Settings</span>
                         </a>
                 </li>
-                {{-- Tree --}}
-                {{-- <li class="treeview">
-                        <a class="app-menu__item {{is_current_route('settings')? 'active':''}}" href="javascript:;"
-                data-toggle="treeview">
-                <i class="fas fa-cog app-menu__icon"></i>
-                <span class="app-menu__label">Settings</span>
-                <i class="treeview-indicator fa fa-angle-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                        <li>
-                                <a class="treeview-item" href="{{admin_route('settings.index')}}">
-                                        <i class="far fa-circle icon"></i> Site
-                                </a>
-                        </li>
-                </ul>
-                </li> --}}
         </ul>
 </aside>

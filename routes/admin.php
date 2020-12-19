@@ -22,6 +22,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('specialists/{id}/delete', 'SpecialistController@destroy')->name('specialists.destroy');
     Route::get('specialists/export-xlsx', 'SpecialistController@exportAsXlsx')->name('specialists.export_xlsx');
     Route::get('specialists/export-csv', 'SpecialistController@exportAsCsv')->name('specialists.export_csv');
+    ################################ Stocks ###################################################
+    Route::get('inventory/stocks', 'StockController@index')->name('stocks.index');
+    Route::get('inventory/stocks/create', 'StockController@create')->name('stocks.create');
+    Route::post('inventory/stocks/create', 'StockController@store')->name('stocks.store');
+    Route::post('inventory/stocks/edit', 'StockController@update')->name('stocks.update');
+    Route::post('inventory/stocks/{id}/delete', 'StockController@destroy')->name('stocks.destroy');
+    Route::get('inventory/stocks/export-xlsx', 'StockController@exportAsXlsx')->name('stocks.export_xlsx');
+    Route::get('inventory/stocks/export-csv', 'StockController@exportAsCsv')->name('stocks.export_csv');
     ############################### Settings ########################################################
     Route::get('settings', 'SettingsSiteController@index')->name('settings.index');
     Route::post('settings/site/update', 'SettingsSiteController@update')->name('settings.site.update');

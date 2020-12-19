@@ -75,4 +75,6 @@ $model = 'specialists';
 @include('admin.' . $model . '._show')
 {{-- Edit Modal --}}
 @include('admin.' . $model . '._edit')
+{{-- Delete Modal --}}
+@include('admin.shared._delete_modal')
 @endsection
