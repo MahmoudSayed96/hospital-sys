@@ -30,6 +30,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('inventory/stocks/{id}/delete', 'StockController@destroy')->name('stocks.destroy');
     Route::get('inventory/stocks/export-xlsx', 'StockController@exportAsXlsx')->name('stocks.export_xlsx');
     Route::get('inventory/stocks/export-csv', 'StockController@exportAsCsv')->name('stocks.export_csv');
+    ################################ Order Stocks ###################################################
+    Route::get('inventory/stocks/orders', 'OrderStockController@index')->name('orders_stocks.index');
+    Route::get('inventory/stocks/request', 'OrderStockController@getStock')->name('orders_stocks.get_stock');
+    Route::get('inventory/stocks/order/create', 'OrderStockController@create')->name('orders_stocks.create');
+    Route::post('inventory/stocks/order/create', 'OrderStockController@store')->name('orders_stocks.store');
+    Route::post('inventory/stocks/order/edit', 'OrderStockController@update')->name('orders_stocks.update');
+    Route::post('inventory/stocks/order/{id}/delete', 'OrderStockController@destroy')->name('orders_stocks.destroy');
+    Route::get('inventory/stocks/order/export-xlsx', 'OrderStockController@exportAsXlsx')->name('orders_stocks.export_xlsx');
+    Route::get('inventory/stocks/order/export-csv', 'OrderStockController@exportAsCsv')->name('orders_stocks.export_csv');
     ############################### Settings ########################################################
     Route::get('settings', 'SettingsSiteController@index')->name('settings.index');
     Route::post('settings/site/update', 'SettingsSiteController@update')->name('settings.site.update');

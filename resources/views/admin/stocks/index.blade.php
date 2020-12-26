@@ -25,7 +25,7 @@ $model = 'stocks';
 'add_btn_text'=>'Add Stock',
 'add_btn_route' => admin_route($model . '.create')
 ])
-<a href="#" class="btn btn-primary badge badge-pill px-2 py-2 ml-3">
+<a href="{{admin_route('orders_stocks.create')}}" class="btn btn-primary badge badge-pill px-2 py-2 ml-3">
     <i class="fas fa-plus"></i>
     <strong>REQUEST STOCK</strong>
 </a>

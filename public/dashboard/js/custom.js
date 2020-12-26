@@ -50,6 +50,25 @@ $(function() {
         reader.readAsDataURL(this.files[0]); // convert to base64 string
     }); //end of image preview
 
+    // Select2.
+    $("#stock_id").select2();
+    // Get stock product data.
+    $("#stock_id").change(function(e) {
+        e.preventDefault();
+        let id = $(this).val();
+        $.ajax({
+            url: `/admin/inventory/stocks/request`,
+            method: "GET",
+            dataType: "json",
+            data: { id },
+            success: function(response) {
+                let data = response.data;
+                $("#serial_no").val(data.serial_no);
+                $("#available_qut").val(data.quantity);
+            }
+        });
+    });
+
     var data = {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [

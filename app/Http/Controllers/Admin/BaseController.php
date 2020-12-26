@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Traits\JsonResponseTrait;
 use App\Traits\RedirectMessagesTrait;
 use App\Traits\UploadImagesTrait;
 use Carbon\Carbon;
@@ -13,7 +14,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 
 class BaseController extends Controller
 {
-    use UploadImagesTrait,RedirectMessagesTrait;
+    use UploadImagesTrait,RedirectMessagesTrait, JsonResponseTrait;
     
     protected $model;
     protected $model_export;
