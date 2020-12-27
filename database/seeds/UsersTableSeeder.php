@@ -19,15 +19,10 @@ class UsersTableSeeder extends Seeder
             'department_id' => 1, 
             'specialist_id' => 1,
             'salary' => 10000,
-            'phone' => ''
+            'phone' => '01144065554',
+            'governorate_id' =>16,
+            'city_id' => 193
         ]);
         $admin->attachRole('admin');
-        // $user = \App\User::create([
-        //     'name'=>'Doctor',
-        //     'username'=>'doctor',
-        //     'email' => 'doctor@app.com',
-        //     'password' => bcrypt('doctor@123')
-        // ]);
-        // $user->attachRole('doctor');
     }
 }

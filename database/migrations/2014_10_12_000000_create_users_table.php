@@ -25,7 +25,6 @@ class CreateUsersTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->enum('gender', [0,1])->default(1);
             $table->decimal('salary', 10, 2)->default(0);
-            $table->text('address')->nullable();
             $table->string('phone')->unique();
             $table->text('bio')->nullable();
             $table->enum('status', [0, 1])->default(0);

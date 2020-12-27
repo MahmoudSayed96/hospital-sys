@@ -14,7 +14,7 @@ class AddSpecialistIdToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('specialist_id');
+            $table->unsignedBigInteger('specialist_id')->after('department_id');
             $table->foreign('specialist_id')->references('id')->on('specialists')->onDelete('cascade');
         });
     }
