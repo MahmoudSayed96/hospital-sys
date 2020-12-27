@@ -42,11 +42,31 @@ class BaseController extends Controller
         return view($view);
     }
 
-    protected function get_view($view_name) {
-        if(empty($this->model_folder)) {
-            return $this->views_folder . '.' . $this->view_name;
+    public function edit(int $id)
+    {
+        try {
+            $row = $this->model->find($id);
+            if(!$row) {
+                return $this->redirectIfNotFound(admin_route_name($this->model_folder . '.index'));
+            }
+            $view = $this->get_view('edit');
+            return view($view, compact('row'));
+        } catch (\Exception $ex) {
+            return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
         }
-        return $this->views_folder . '.' . $this->model_folder .'.' . $view_name;
+    }
+    public function show(int $id)
+    {
+        try {
+            $row = $this->model->find($id);
+            if(!$row) {
+                return $this->redirectIfNotFound(admin_route_name($this->model_folder . '.index'));
+            }
+            $view = $this->get_view('show');
+            return view($view, compact('row'));
+        } catch (\Exception $ex) {
+            return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
+        }
     }
 
     public function destroy($id) {
@@ -60,6 +80,13 @@ class BaseController extends Controller
         } catch (\Exception $ex) {
             return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
         }
+    }
+
+    protected function get_view($view_name) {
+        if(empty($this->model_folder)) {
+            return $this->views_folder . '.' . $this->view_name;
+        }
+        return $this->views_folder . '.' . $this->model_folder .'.' . $view_name;
     }
 
     /**

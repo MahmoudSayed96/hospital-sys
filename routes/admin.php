@@ -39,6 +39,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('inventory/stocks/order/{id}/delete', 'OrderStockController@destroy')->name('orders_stocks.destroy');
     Route::get('inventory/stocks/order/export-xlsx', 'OrderStockController@exportAsXlsx')->name('orders_stocks.export_xlsx');
     Route::get('inventory/stocks/order/export-csv', 'OrderStockController@exportAsCsv')->name('orders_stocks.export_csv');
+    ################################ Medicines ###################################################
+    Route::get('medicines', 'MedicineController@index')->name('medicines.index');
+    Route::get('medicines/create', 'MedicineController@create')->name('medicines.create');
+    Route::post('medicines/create', 'MedicineController@store')->name('medicines.store');
+    Route::get('medicines/{id}/show', 'MedicineController@show')->name('medicines.show');
+    Route::get('medicines/{id}/edit', 'MedicineController@edit')->name('medicines.edit');
+    Route::post('medicines/{id}/edit', 'MedicineController@update')->name('medicines.update');
+    Route::post('medicines/{id}/delete', 'MedicineController@destroy')->name('medicines.destroy');
+    Route::get('medicines/export-xlsx', 'MedicineController@exportAsXlsx')->name('medicines.export_xlsx');
+    Route::get('medicines/export-csv', 'MedicineController@exportAsCsv')->name('medicines.export_csv');
     ############################### Settings ########################################################
     Route::get('settings', 'SettingsSiteController@index')->name('settings.index');
     Route::post('settings/site/update', 'SettingsSiteController@update')->name('settings.site.update');

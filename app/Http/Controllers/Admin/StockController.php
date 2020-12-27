@@ -11,6 +11,7 @@ use App\Models\Stock;
 class StockController extends BaseController
 {
     protected $model_folder = 'stocks';
+    protected $route_name = 'stocks';
 
     public function __construct(Stock $model, StockExport $model_export)
     {
@@ -26,9 +27,9 @@ class StockController extends BaseController
                 'price'         => $request->price,
                 'type'          => $request->type,
             ]);
-            return $this->redirectIfSuccess(admin_route_name($this->model_folder . '.index'), $request->name . ' Created Successfully.');
+            return $this->redirectIfSuccess(admin_route_name($this->route_name . '.index'), $request->name . ' Created Successfully.');
         } catch (\Exception $ex) {
-            return $this->redirectIfError(admin_route_name($this->model_folder . '.create'), null);
+            return $this->redirectIfError(admin_route_name($this->route_name . '.create'), null);
         }
     }
 
@@ -36,7 +37,7 @@ class StockController extends BaseController
         try {
             $row = $this->model->find($request->id);
             if(!$row) {
-                return $this->redirectIfNotFound(admin_route_name($this->model_folder . '.index'));
+                return $this->redirectIfNotFound(admin_route_name($this->route_name . '.index'));
             }
             $row->update([
                 'name'          => $request->name,
@@ -45,9 +46,9 @@ class StockController extends BaseController
                 'price'         => $request->price,
                 'type'          => $request->type,
             ]);
-            return $this->redirectIfSuccess(admin_route_name($this->model_folder . '.index'), $row->name . ' Updated Successfully.');
+            return $this->redirectIfSuccess(admin_route_name($this->route_name . '.index'), $row->name . ' Updated Successfully.');
         } catch (\Exception $ex) {
-            return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
+            return $this->redirectIfError(admin_route_name($this->route_name . '.index'));
         }
     }
 }

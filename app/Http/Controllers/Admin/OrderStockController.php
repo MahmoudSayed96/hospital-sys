@@ -68,7 +68,6 @@ class OrderStockController extends BaseController
             return $this->redirectIfSuccess(admin_route_name($this->route_name . '.create'), 'Data Updated Successfully.');
         } catch (\Exception $ex) {
             DB::rollback();
-            return $ex->getMessage();
             return $this->redirectIfError(admin_route_name($this->route_name . '.create'));
         }
     }

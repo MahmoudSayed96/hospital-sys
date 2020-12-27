@@ -52,6 +52,14 @@
                         </ul>
                 </li>
 
+                {{-- Medicines --}}
+                <li class="treeview">
+                        <a class="app-menu__item {{is_current_route('medicines')? 'active':''}}"
+                                href="{{admin_route('medicines.index')}}">
+                                <i class="fas fa-capsules app-menu__icon"></i>
+                                <span class="app-menu__label">Medicines</span>
+                        </a>
+                </li>
                 {{-- Settings --}}
                 <li class="treeview">
                         <a class="app-menu__item {{is_current_route('settings')? 'active':''}}"

@@ -36,10 +36,11 @@ $(function() {
 
     // Date picker.
     $("#demoDate").datepicker({
-        format: "dd/mm/yyyy",
+        format: "yyyy-mm-dd",
         autoclose: true,
         todayHighlight: true
     });
+
     // Preview image before upload.
     // Image preview
     $("#imgInp").change(function() {
