@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->decimal('salary', 10, 2)->default(0);
             $table->string('phone')->unique();
             $table->text('bio')->nullable();
-            $table->enum('status', [0, 1])->default(0);
+            $table->enum('status', [0, 1])->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

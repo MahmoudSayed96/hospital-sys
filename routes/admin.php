@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/test/create', function () {
-        return request()->route()->getName();
+    Route::get('/test', function () {
+        $row = App\User::with(['department', 'specialist', 'governorate', 'city'])->first();
+        return $row;
     });
     Route::get('/', 'AdminController@index')->name('welcome');
+    Route::get('/gov', 'AdminController@getGovCities')->name('gov');
     ################################ Departments ###################################################
     Route::get('departments', 'DepartmentController@index')->name('departments.index');
     Route::get('departments/create', 'DepartmentController@create')->name('departments.create');
@@ -22,6 +24,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('specialists/{id}/delete', 'SpecialistController@destroy')->name('specialists.destroy');
     Route::get('specialists/export-xlsx', 'SpecialistController@exportAsXlsx')->name('specialists.export_xlsx');
     Route::get('specialists/export-csv', 'SpecialistController@exportAsCsv')->name('specialists.export_csv');
+    ################################ Doctors ###################################################
+    Route::get('doctors', 'DoctorController@index')->name('doctors.index');
+    Route::get('doctors/gallery', 'DoctorController@gallery')->name('doctors.gallery');
+    Route::get('doctors/create', 'DoctorController@create')->name('doctors.create');
+    Route::post('doctors/create', 'DoctorController@store')->name('doctors.store');
+    Route::get('doctors/{id}/edit', 'DoctorController@edit')->name('doctors.edit');
+    Route::get('doctors/{id}', 'DoctorController@show')->name('doctors.show');
+    Route::post('doctors/{id}/edit', 'DoctorController@update')->name('doctors.update');
+    Route::post('doctors/{id}/delete', 'DoctorController@destroy')->name('doctors.destroy');
+    Route::get('doctors/export-xlsx', 'DoctorController@exportAsXlsx')->name('doctors.export_xlsx');
+    Route::get('doctors/export-csv', 'DoctorController@exportAsCsv')->name('doctors.export_csv');
     ################################ Stocks ###################################################
     Route::get('inventory/stocks', 'StockController@index')->name('stocks.index');
     Route::get('inventory/stocks/create', 'StockController@create')->name('stocks.create');

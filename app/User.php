@@ -2,7 +2,12 @@
 
 namespace App;
 
+use App\Models\City;
+use App\Models\Department;
+use App\Models\Governorate;
+use App\Models\Specialist;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -38,4 +43,99 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Accessors.
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    // Active records.
+    public function scopeActive($query) {
+        return $query->where('status' , 1);
+    }
+
+    // InActive records.
+    public function scopeInActive($query) {
+        return $query->where('status' , 0);
+    }
+
+    /**
+     * Get status attribute value.
+     */
+    public function getStatusAttribute($value){
+        return $value;
+    }
+
+    /**
+     * Get status value.
+     */
+    public function getStatus() {
+        return $this->status == 1 ? 'Active' : 'InActive';
+    }
+
+    /**
+     * Get avatar attribute value.
+     */
+    public function getAvatarAttribute($value){
+        return isset($this->attributes['avatar']) ? $this->attributes['avatar'] : null;
+    }
+
+    /**
+     * Get avatar image value.
+     */
+    public function getAvatar() {
+        return isset($this->attributes['avatar']) != null ? asset($this->attributes['avatar']) : asset('uploads/images/user-avatar.jpg');;
+    }
+
+    /**
+     * Get default profile pic path name.
+     */
+    public function getDefaultAvatarPath() {
+        return 'uploads/images/user-avatar.jpg';
+    }
+
+    /**
+     * Get gender.
+     */
+    public function getGenderAttribute($value) {
+        return $value;
+    }
+
+    /**
+     * Get value of blood group attribute.
+     */
+    public function getGender() {
+        return ($this->attributes['gender'] == 1) ? 'Male' : 'Female';
+    }
+
+    // Relations.
+
+    /**
+     * Get user department.
+     */
+    public function department() {
+        return $this->belongsTo(Department::class);
+    }
+
+    /**
+     * Get user department.
+     */
+    public function specialist() {
+        return $this->belongsTo(Specialist::class);
+    }
+
+    /**
+     * Get user governorate.
+     */
+    public function governorate() {
+        return $this->belongsTo(Governorate::class);
+    }
+
+    /**
+     * Get user city.
+     */
+    public function city() {
+        return $this->belongsTo(City::class);
+    }
+
 }

@@ -41,6 +41,9 @@ $(function() {
         todayHighlight: true
     });
 
+    // Select2.
+    $(".select2").select2();
+
     // Preview image before upload.
     // Image preview
     $("#imgInp").change(function() {
@@ -70,6 +73,51 @@ $(function() {
         });
     });
 
+    // Get gov cities.
+    $("#governorate_id").change(function(e) {
+        e.preventDefault();
+        $("#city_id").attr("disabled", true);
+        let govId = $(this).val();
+        let _token = $('meta[name="csrf-token"]').attr("content");
+        $.ajax({
+            url: "/admin/gov",
+            method: "GET",
+            type: "json",
+            data: { id: govId, _token },
+            success: function(response) {
+                $("#cities").html("");
+                $("#city_id").attr("disabled", false);
+                let data = response.data;
+                let html = `<option></option>`;
+                $.each(data, function(index, value) {
+                    html += `<option value="${value["id"]}">${value["name"]}</option>`;
+                });
+                $("#cities").html(html);
+                $("#city_id").select2({
+                    placeholder: "Select City"
+                });
+            }
+        });
+    });
+    // Toggle password.
+    $("span.password").on("click", function() {
+        console.log("click");
+        $("i.pass").toggleClass("fa-eye-slash fa-eye");
+        togglePassword(".password");
+    });
+    $("span.password_confirmation").on("click", function() {
+        console.log("click");
+        $("i.pass-confirm").toggleClass("fa-eye-slash fa-eye");
+        togglePassword(".password_confirmation");
+    });
+    // Password hide/show.
+    function togglePassword(selector) {
+        if ($(selector).attr("type") == "text") {
+            $(selector).attr("type", "password");
+        } else {
+            $(selector).attr("type", "text");
+        }
+    }
     var data = {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [

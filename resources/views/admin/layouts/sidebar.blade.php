@@ -2,13 +2,22 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
         <div class="app-sidebar__user">
-                <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                        alt="User Image">
+                <a href="{{admin_route('doctors.show', currentUser()->id)}}">
+                        <img class="app-sidebar__user-avatar img-fluid img-thumbnail"
+                                src="{{currentUser()->getAvatar()}}" width="50" height="50"
+                                alt="{{currentUser()->username}}" title="{{currentUser()->username}}">
+                </a>
                 <div>
-                        <p class="app-sidebar__user-name">John Doe</p>
-                        <p class="app-sidebar__user-designation">Frontend Developer</p>
+                        <p class="app-sidebar__user-name">
+                                <a
+                                        href="{{admin_route('doctors.show', currentUser()->id)}}">{{ucwords(currentUser()->name)}}</a>
+                        </p>
+                        <p class="app-sidebar__user-designation">
+                                {{currentUser()->email}}
+                        </p>
                 </div>
         </div>
+        <hr>
         <ul class="app-menu">
                 {{-- Dashboard --}}
                 <li>
@@ -33,7 +42,14 @@
                                 <span class="app-menu__label">Specialists</span>
                         </a>
                 </li>
-
+                {{-- Doctors --}}
+                <li class="treeview">
+                        <a class="app-menu__item {{is_current_route('doctors')? 'active':''}}"
+                                href="{{admin_route('doctors.index')}}">
+                                <i class="fas fa-user-md app-menu__icon"></i>
+                                <span class="app-menu__label">Doctors</span>
+                        </a>
+                </li>
                 {{-- Inventory --}}
                 <li class="treeview">
                         <a class="app-menu__item {{is_current_route('inventory')? 'active':''}}" href="javascript:;"
@@ -51,7 +67,6 @@
 
                         </ul>
                 </li>
-
                 {{-- Medicines --}}
                 <li class="treeview">
                         <a class="app-menu__item {{is_current_route('medicines')? 'active':''}}"

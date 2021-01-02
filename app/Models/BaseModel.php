@@ -30,4 +30,33 @@ class BaseModel extends Model
     public function getStatus() {
         return $this->status == 1 ? 'Active' : 'InActive';
     }
+
+    /**
+     * Get avatar attribute value.
+     */
+    public function getAvatarAttribute($value){
+        return isset($this->attributes['avatar']) != null ? asset($value) : asset('uploads/images/default-avatar.jpg');;
+    }
+
+    /**
+     * Get avatar image value.
+     */
+    public function getAvatar() {
+        return isset($this->attributes['avatar']) ? $this->attributes['avatar'] : null;
+    }
+
+    /**
+     * Get gender.
+     */
+    public function getGenderAttribute($value) {
+        return $value;
+    }
+
+    /**
+     * Get value of blood group attribute.
+     */
+    public function getGender() {
+        return ($this->attributes['gender'] == 0) ? 'Male' : 'Female';
+    }
+
 }

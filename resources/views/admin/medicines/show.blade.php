@@ -6,10 +6,10 @@
 @component('admin.shared.breadcrumb',[
 'title' => 'Medicines',
 'icon' => 'fas fa-capsules',
-'description' => 'Update medicine.',
+'description' => 'View medicine.',
 'current_route' => 'medicines.index',
 'current_link' => 'Medicines',
-'active_action' => 'Edit',
+'active_action' => 'View',
 ])
 @endcomponent
 {{-- Form --}}

@@ -32,6 +32,10 @@ class BaseController extends Controller
     public function index()
     {
         $view = $this->get_view('index');
+        $rows = $this->model;
+        $with = $this->with(); // for relations
+        if (!empty($with))
+            $rows = $rows->with($with);
         $rows = $this->model::latest()->paginate(RouteServiceProvider::PAGINATION_LIMIT);
         return view($view, compact('rows'));
     }
@@ -118,5 +122,12 @@ class BaseController extends Controller
         $arr = explode('\\', $obj);
         $length = sizeof($arr);
         return $arr[$length - 1];
+    }
+
+    /**
+     * Return relations.
+     */
+    protected function with() {
+        return [];
     }
 }
