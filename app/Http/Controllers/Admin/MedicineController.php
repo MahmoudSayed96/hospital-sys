@@ -6,6 +6,7 @@ use App\Exports\MedicineExport;
 use App\Http\Requests\Admin\Medicine\StoreMedicineRequest;
 use App\Http\Requests\Admin\Medicine\UpdateMedicineRequest;
 use App\Models\Medicine;
+use Yajra\DataTables\Facades\DataTables;
 
 class MedicineController extends BaseController
 {
@@ -15,6 +16,28 @@ class MedicineController extends BaseController
     public function __construct(Medicine $model, MedicineExport $model_export)
     {
         parent::__construct($model, $model_export);
+    }
+
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getData()
+    {
+        $record = $this->model->selection()->latest();
+        return DataTables::eloquent($record)
+                ->addColumn('status', function($row){
+                    return $row->status == 1 ? '<strong class="px-3 py-1 badge alert-success border border-success">'.$row->getStatus().'</strong>' : '<strong class="px-3 py-1 badge border border-danger alert-danger">'.$row->getStatus().'</strong>';;
+                }) 
+                ->addColumn('price', function($row){
+                    return number_format($row->price, 2);
+                })             
+                ->addColumn('actions', function($row){
+                    return $this->renderActions($row);
+                })
+                ->rawColumns(['status', 'actions'])
+                ->toJson();
     }
 
     public function store(StoreMedicineRequest $request){
@@ -54,6 +77,14 @@ class MedicineController extends BaseController
             return $ex->getMessage();
             return $this->redirectIfError(admin_route_name($this->route_name . '.index'));
         }
+    }
+
+    /**
+     * Render actions html.
+     */
+    private function renderActions($row) {
+        $view = $this->get_view('actions');
+        return view($view, compact('row'))->render();
     }
 
 }

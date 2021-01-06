@@ -6,6 +6,7 @@ use App\Exports\SpecialistsExport;
 use App\Http\Requests\Admin\Specialist\StoreSpecialistRequest;
 use App\Http\Requests\Admin\Specialist\UpdateSpecialistRequest;
 use App\Models\Specialist;
+use Yajra\DataTables\Facades\DataTables;
 
 class SpecialistController extends BaseController
 {
@@ -14,6 +15,25 @@ class SpecialistController extends BaseController
     public function __construct(Specialist $model, SpecialistsExport $model_export)
     {
         parent::__construct($model, $model_export);
+    }
+    
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getData()
+    {
+        $record = $this->model->selection()->latest();
+        return DataTables::of($record)
+                ->addColumn('status', function($row){
+                    return $row->status == 1 ? '<strong class="px-3 py-1 badge alert-success border border-success">'.$row->getStatus().'</strong>' : '<strong class="px-3 py-1 badge border border-danger alert-danger">'.$row->getStatus().'</strong>';;
+                })              
+                ->addColumn('actions', function($row){
+                    return $this->renderActions($row);
+                })
+                ->rawColumns(['actions'])
+                ->toJson();
     }
 
     public function store(StoreSpecialistRequest $request){
@@ -40,5 +60,13 @@ class SpecialistController extends BaseController
         } catch (\Exception $ex) {
             return $this->redirectIfError(admin_route_name($this->model_folder . '.index'));
         }
+    }
+    
+    /**
+     * Render actions html.
+     */
+    private function renderActions($row) {
+        $view = $this->get_view('actions');
+        return view($view, compact('row'))->render();
     }
 }

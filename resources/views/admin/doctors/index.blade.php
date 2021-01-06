@@ -43,10 +43,9 @@ $model = 'doctors';
 'export_xlsx_route' => admin_route($model . '.export_xlsx'),
 'export_csv_route' => admin_route($model . '.export_csv'),
 ])
-<table class="table table-hover table-bordered text-center" id="sampleTable">
+<table class="table table-hover table-bordered text-center" id="dataTables">
     <thead>
         <tr>
-            <th>No.</th>
             <th>Name</th>
             <th>Username</th>
             <th>Email</th>
@@ -57,57 +56,32 @@ $model = 'doctors';
         </tr>
     </thead>
     <tbody>
-        @isset($rows)
-        @foreach ($rows as $index => $row)
-        <tr>
-            <td>{{$index + 1}}</td>
-            <td>
-                <a class="d-flex align-items-center" href="#">
-                    <img src="{{$row->getAvatar()}}" class="img-fluid img-thumbnail rounded-circle mr-1" width="50"
-                        height="50" alt="{{$row->username}}" style="min-width:50px;min-height:50px;">
-                    <span>{{$row->name}}</span>
-                </a>
-            </td>
-            <td>{{$row->username}}</td>
-            <td>{{$row->email}}</td>
-            <td>{{$row->department->name}}</td>
-            <td>{{$row->specialist->name}}</td>
-            <td>
-                <strong
-                    class="px-3 py-1 badge alert-success border border-success @if($row->status == 0) border-danger alert-danger @endif">
-                    {{$row->getStatus()}}
-                </strong>
-            </td>
-            <td class="d-flex align-items-center justify-content-around">
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="View Profile">
-                    <a href="{{admin_route($model . '.show', $row->id)}}" class="text-primary">
-                        <i class="icon fas fa-eye fa-w fa-lg"></i>
-                    </a>
-                </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Edit Profile">
-                    <a href="{{admin_route($model . '.edit', $row->id)}}" class="text-secondary" type="button">
-                        <i class="icon fas fa-pencil-alt fa-w fa-lg"></i>
-                    </a>
-                </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Delete Profile">
-                    <a href="javascript:;" class="delete text-danger text-md" data-target="#deleteModal" type="button"
-                        data-toggle="modal" data-id="{{$row->id}}">
-                        <i class="icon fas fa-trash fa-lg"></i>
-                        <form action="{{admin_route($model . '.destroy', $row->id)}}" class="d-none" method="post"
-                            id="delete-form-{{$row->id}}">
-                            @csrf
-                        </form>
-                    </a>
-                </span>
-            </td>
-        </tr>
-        @endforeach
-        @endisset
     </tbody>
-
 </table>
 @endcomponent
 
 {{-- Delete Modal --}}
 @include('admin.shared._delete_modal')
 @endsection
+
+{{-- JavaScript code --}}
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        var t = $('#dataTables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{admin_route("doctors.get_data")}}',
+            columns: [
+                { data: 'name', name: 'name',  },
+                { data: 'username', name: 'username',  },
+                { data: 'email', name: 'email',  },
+                { data: 'department', name: 'department',  },
+                { data: 'specialist', name: 'specialist',  },
+                { data: 'status', name: 'status' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false},
+            ]
+        });
+    });
+</script>
+@endpush

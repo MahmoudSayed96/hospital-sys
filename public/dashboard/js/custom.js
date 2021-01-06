@@ -1,5 +1,8 @@
 $(function() {
     "use strict";
+    // Loading page.
+    // $("#loading_wrap").remove();
+    $("#loading_wrap").fadeOut(1000);
     var treeviewMenu = $(".app-menu");
 
     // Toggle Sidebar

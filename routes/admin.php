@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/test', function () {
         $row = App\User::with(['department', 'specialist', 'governorate', 'city'])->first();
-        return $row;
+        // return $row;
+        return view('admin.doctors.actions', compact('row'))->render();
     });
     Route::get('/', 'AdminController@index')->name('welcome');
     Route::get('/gov', 'AdminController@getGovCities')->name('gov');
     ################################ Departments ###################################################
     Route::get('departments', 'DepartmentController@index')->name('departments.index');
+    Route::get('departments/data', 'DepartmentController@getData')->name('departments.get_data');
     Route::get('departments/create', 'DepartmentController@create')->name('departments.create');
     Route::post('departments/create', 'DepartmentController@store')->name('departments.store');
     Route::post('departments/edit', 'DepartmentController@update')->name('departments.update');
@@ -19,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('departments/export-csv', 'DepartmentController@exportAsCsv')->name('departments.export_csv');
     ################################ Specialists ###################################################
     Route::get('specialists', 'SpecialistController@index')->name('specialists.index');
+    Route::get('specialists/data', 'SpecialistController@getData')->name('specialists.get_data');
     Route::post('specialists/create', 'SpecialistController@store')->name('specialists.store');
     Route::post('specialists/edit', 'SpecialistController@update')->name('specialists.update');
     Route::post('specialists/{id}/delete', 'SpecialistController@destroy')->name('specialists.destroy');
@@ -26,17 +29,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('specialists/export-csv', 'SpecialistController@exportAsCsv')->name('specialists.export_csv');
     ################################ Doctors ###################################################
     Route::get('doctors', 'DoctorController@index')->name('doctors.index');
+    Route::get('doctors/data', 'DoctorController@getData')->name('doctors.get_data');
     Route::get('doctors/gallery', 'DoctorController@gallery')->name('doctors.gallery');
     Route::get('doctors/create', 'DoctorController@create')->name('doctors.create');
     Route::post('doctors/create', 'DoctorController@store')->name('doctors.store');
     Route::get('doctors/{id}/edit', 'DoctorController@edit')->name('doctors.edit');
-    Route::get('doctors/{id}', 'DoctorController@show')->name('doctors.show');
+    Route::get('doctors/{id}/show', 'DoctorController@show')->name('doctors.show');
     Route::post('doctors/{id}/edit', 'DoctorController@update')->name('doctors.update');
     Route::post('doctors/{id}/delete', 'DoctorController@destroy')->name('doctors.destroy');
     Route::get('doctors/export-xlsx', 'DoctorController@exportAsXlsx')->name('doctors.export_xlsx');
     Route::get('doctors/export-csv', 'DoctorController@exportAsCsv')->name('doctors.export_csv');
     ################################ Stocks ###################################################
     Route::get('inventory/stocks', 'StockController@index')->name('stocks.index');
+    Route::get('inventory/stocks/data', 'StockController@getData')->name('stocks.get_data');
     Route::get('inventory/stocks/create', 'StockController@create')->name('stocks.create');
     Route::post('inventory/stocks/create', 'StockController@store')->name('stocks.store');
     Route::post('inventory/stocks/edit', 'StockController@update')->name('stocks.update');
@@ -54,6 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('inventory/stocks/order/export-csv', 'OrderStockController@exportAsCsv')->name('orders_stocks.export_csv');
     ################################ Medicines ###################################################
     Route::get('medicines', 'MedicineController@index')->name('medicines.index');
+    Route::get('medicines/data', 'MedicineController@getData')->name('medicines.get_data');
     Route::get('medicines/create', 'MedicineController@create')->name('medicines.create');
     Route::post('medicines/create', 'MedicineController@store')->name('medicines.store');
     Route::get('medicines/{id}/show', 'MedicineController@show')->name('medicines.show');

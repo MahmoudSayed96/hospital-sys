@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Yajra\DataTables\Services\DataTable;
 
 class BaseController extends Controller
 {
@@ -24,20 +25,27 @@ class BaseController extends Controller
 
     public function __construct(Model $model, $model_export)
     {
-        
         $this->model = $model;
         $this->model_export = $model_export;
     }
 
-    public function index()
-    {
+    // public function index()
+    // {
+    //     $view = $this->get_view('index');
+    //     $rows = $this->model;
+    //     $with = $this->with(); // for relations
+    //     if (!empty($with)) {
+    //         $rows = $this->model->with($with)->latest()->paginate(RouteServiceProvider::PAGINATION_LIMIT);
+    //     } else {
+    //         $rows = $this->model->latest()->paginate(RouteServiceProvider::PAGINATION_LIMIT);
+    //     }
+            
+    //     return view($view, compact('rows'));
+    // }
+
+    public function index() {
         $view = $this->get_view('index');
-        $rows = $this->model;
-        $with = $this->with(); // for relations
-        if (!empty($with))
-            $rows = $rows->with($with);
-        $rows = $this->model::latest()->paginate(RouteServiceProvider::PAGINATION_LIMIT);
-        return view($view, compact('rows'));
+        return view($view);
     }
 
     public function create()

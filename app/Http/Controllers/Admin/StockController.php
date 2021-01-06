@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Stock\StoreStockRequest;
 use App\Http\Requests\Admin\Stock\UpdateStockRequest;
 use App\Models\Stock;
+use Yajra\DataTables\Facades\DataTables;
 
 class StockController extends BaseController
 {
@@ -16,6 +17,28 @@ class StockController extends BaseController
     public function __construct(Stock $model, StockExport $model_export)
     {
         parent::__construct($model, $model_export);
+    }
+
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getData()
+    {
+        $record = $this->model->selection()->latest();
+        return DataTables::eloquent($record)
+                ->addColumn('status', function($row){
+                    return $row->status == 1 ? '<strong class="px-3 py-1 badge alert-success border border-success">'.$row->getStatus().'</strong>' : '<strong class="px-3 py-1 badge border border-danger alert-danger">'.$row->getStatus().'</strong>';;
+                }) 
+                ->addColumn('type', function($row){
+                    return $row->getType();
+                })             
+                ->addColumn('actions', function($row){
+                    return $this->renderActions($row);
+                })
+                ->rawColumns(['status', 'type', 'actions'])
+                ->toJson();
     }
 
     public function store(StoreStockRequest $request){
@@ -50,5 +73,13 @@ class StockController extends BaseController
         } catch (\Exception $ex) {
             return $this->redirectIfError(admin_route_name($this->route_name . '.index'));
         }
+    }
+
+    /**
+     * Render actions html.
+     */
+    private function renderActions($row) {
+        $view = $this->get_view('actions');
+        return view($view, compact('row'))->render();
     }
 }

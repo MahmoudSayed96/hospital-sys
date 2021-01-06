@@ -34,10 +34,9 @@ $model = 'medicines';
 'export_xlsx_route' => admin_route($model . '.export_xlsx'),
 'export_csv_route' => admin_route($model . '.export_csv'),
 ])
-<table class="table table-hover table-bordered text-center" id="sampleTable">
+<table class="table table-hover table-bordered text-center" id="dataTables">
     <thead>
         <tr>
-            <th>#</th>
             <th>Name</th>
             <th>Price</th>
             <th>Expire Date</th>
@@ -48,51 +47,31 @@ $model = 'medicines';
         </tr>
     </thead>
     <tbody>
-        @isset($rows)
-        @foreach ($rows as $index => $row)
-        <tr>
-            <td>{{$index + 1}}</td>
-            <td>{{$row->name}}</td>
-            <td>{{number_format($row->price)}}</td>
-            <td>{{$row->expire_date}}</td>
-            <td>{{$row->quantity}}</td>
-            <td>{{$row->alert_qty}}</td>
-            <td>
-                <strong
-                    class="px-3 py-1 badge alert-success border border-success @if($row->status == 0) border-danger alert-danger @endif">
-                    {{$row->getStatus()}}
-                </strong>
-            </td>
-            <td class="d-flex align-items-center justify-content-around">
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="View Medicine">
-                    <a href="{{admin_route($model . '.show', $row->id)}}" class="text-primary">
-                        <i class="icon fas fa-eye fa-w fa-lg"></i>
-                    </a>
-                </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Edit Medicine">
-                    <a href="{{admin_route($model . '.edit', $row->id)}}" class="text-secondary" type="button">
-                        <i class="icon fas fa-pencil-alt fa-w fa-lg"></i>
-                    </a>
-                </span>
-                <span class="d-block" data-toggle="tooltip" data-placement="top" title="Delete Medicine">
-                    <a href="javascript:;" class="delete text-danger text-md" data-target="#deleteModal" type="button"
-                        data-toggle="modal" data-id="{{$row->id}}">
-                        <i class="icon fas fa-trash fa-lg"></i>
-                        <form action="{{admin_route($model . '.destroy', $row->id)}}" class="d-none" method="post"
-                            id="delete-form-{{$row->id}}">
-                            @csrf
-                        </form>
-                    </a>
-                </span>
-            </td>
-        </tr>
-        @endforeach
-        @endisset
     </tbody>
 </table>
 @endcomponent
-{{-- View Modal --}}
-@include('admin.' . $model . '._show')
 {{-- Delete Modal --}}
 @include('admin.shared._delete_modal')
 @endsection
+
+{{-- JavaScript code --}}
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('#dataTables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{admin_route("medicines.get_data")}}',
+            columns: [
+                { data: 'name', name: 'name', orderable: true, searchable: true },
+                { data: 'price', name: 'price', orderable: true, searchable: true },
+                { data: 'expire_date', name: 'expire_date', orderable: true, searchable: true },
+                { data: 'quantity', name: 'quantity', orderable: true, searchable: true },
+                { data: 'alert_qty', name: 'alert_qty', orderable: true, searchable: true },
+                { data: 'status', name: 'status', orderable: true, searchable: true },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ]
+        });
+    });
+</script>
+@endpush

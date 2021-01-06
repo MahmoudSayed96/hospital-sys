@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'avatar', 'date_of_birth', 'address', 'phone', 'governorate_id', 'city_id', 'department_id', 'specialist_id', 'degree', 'status', 'gender', 'bio', 'salary'
+        'name', 'username', 'email', 'password', 'avatar', 'date_of_birth', 'phone', 'governorate_id', 'city_id', 'department_id', 'specialist_id', 'degree', 'status', 'gender', 'bio', 'salary'
     ];
 
     /**
@@ -59,6 +59,13 @@ class User extends Authenticatable
         return $query->where('status' , 0);
     }
 
+    // Selection.
+    public function scopeSelection($query) {
+        return $query->select([
+            'id', 'name', 'username', 'email', 'avatar', 'date_of_birth', 'phone', 'governorate_id', 'city_id', 'department_id', 'specialist_id', 'degree', 'status', 'gender', 'bio', 'salary'
+        ]);
+    }
+
     /**
      * Get status attribute value.
      */
@@ -70,7 +77,7 @@ class User extends Authenticatable
      * Get status value.
      */
     public function getStatus() {
-        return $this->status == 1 ? 'Active' : 'InActive';
+        return $this->status == 1 ? '<strong class="px-3 py-1 badge alert-success border border-success">Active</strong>' : '<strong class="px-3 py-1 badge border border-danger alert-danger">InActive</strong>';
     }
 
     /**

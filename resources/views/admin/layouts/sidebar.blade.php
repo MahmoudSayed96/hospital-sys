@@ -68,7 +68,7 @@
                         </ul>
                 </li>
                 {{-- Medicines --}}
-                <li class="treeview">
+                <li>
                         <a class="app-menu__item {{is_current_route('medicines')? 'active':''}}"
                                 href="{{admin_route('medicines.index')}}">
                                 <i class="fas fa-capsules app-menu__icon"></i>
@@ -76,12 +76,22 @@
                         </a>
                 </li>
                 {{-- Settings --}}
-                <li class="treeview">
+                <li>
                         <a class="app-menu__item {{is_current_route('settings')? 'active':''}}"
                                 href="{{admin_route('settings.index')}}">
                                 <i class="fas fa-cog app-menu__icon"></i>
                                 <span class="app-menu__label">Settings</span>
                         </a>
+                </li>
+                {{-- Logout --}}
+                <li>
+                        <a class="app-menu__item" href="javascript:;"
+                                onclick="document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt app-menu__icon"></i> Logout
+                        </a>
+                        <form action="{{route('logout')}}" class="d-none" id="logout-form" method="POST">
+                                @csrf
+                        </form>
                 </li>
         </ul>
 </aside>

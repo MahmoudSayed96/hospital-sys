@@ -26,13 +26,7 @@
                 <h2 class="text-center mt-5">No Description.</h2>
                 @endif
                 @endisset
-                <div class="mt-5">
-                    <button type="button" class="d-block btn btn-danger badge badge-pill px-4 py-3 mr-3"
-                        onclick="history.back();">
-                        <i class="fas fa-times-circle fa-w fa-lg"></i>
-                        Back
-                    </button>
-                </div>
+                @include('admin.shared.buttons.back_btn')
             </div>
         </div>
     </div>

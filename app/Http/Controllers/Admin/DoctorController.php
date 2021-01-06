@@ -11,8 +11,9 @@ use App\Models\Specialist;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-
+use Yajra\DataTables\Facades\DataTables;
 class DoctorController extends BaseController
 {
     protected $model_folder = 'doctors';
@@ -21,14 +22,6 @@ class DoctorController extends BaseController
     public function __construct(User $model, DoctorExport $model_export)
     {
         parent::__construct($model, $model_export);
-    }
-
-    public function index() {
-        $view = $this->get_view('index');
-        $rows = $this->model;
-        $with = $this->with(); // for relations
-        $rows = $this->model::whereRoleIs(['doctor'])->with($with)->latest()->paginate(RouteServiceProvider::PAGINATION_LIMIT);
-        return view($view, compact('rows'));
     }
 
     public function gallery(Request $request) {
@@ -45,8 +38,38 @@ class DoctorController extends BaseController
         return view($view, compact('rows'));
     }
 
-    public function create()
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getData(Request $request)
     {
+        $with = $this->with();
+        $record = $this->model->with($with)->select([
+            'id', 'name', 'username', 'email', 'avatar', 'status', 'department_id', 'specialist_id'
+        ])->whereRoleIs(['doctor'])->latest();
+       $dataTables = DataTables::of($record)
+            ->addColumn('name', function($row){
+                return '<a class="d-flex align-items-center" href="#"><img src="'.$row->getAvatar().'" class="img-fluid img-thumbnail rounded-circle mr-1" width="50"height="50" alt="'.$row->username.'" style="min-width:50px;min-height:50px;"><span>'.$row->name.'</span></a>';
+            })
+            ->addColumn('status', function($row){
+                return $row->getStatus();
+            })
+            ->addColumn('department', function($row){
+                return $row->department->name;
+            })
+            ->addColumn('specialist', function($row){
+                return $row->specialist->name;
+            })
+            ->addColumn('actions', function($row){
+                return $this->renderActions($row);
+            })
+            ->rawColumns(['name', 'status', 'department', 'specialist', 'actions']);
+        return $dataTables->make(true);
+    }
+
+    public function create() {
         $view = $this->get_view('create');
         $govs = Governorate::all();
         $departments = Department::all();
@@ -85,8 +108,7 @@ class DoctorController extends BaseController
         }
     }
 
-    public function edit(int $id)
-    {
+    public function edit(int $id) {
         try {
             $row = $this->model->find($id);
             if(!$row) {
@@ -167,5 +189,13 @@ class DoctorController extends BaseController
      */
     protected function with() {
         return ['department', 'specialist', 'governorate', 'city'];
+    }
+
+    /**
+     * Render actions html.
+     */
+    private function renderActions($row) {
+        $view = $this->get_view('actions');
+        return view($view, compact('row'))->render();
     }
 }

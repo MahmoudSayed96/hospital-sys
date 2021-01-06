@@ -15,9 +15,8 @@
 <!-- Data table plugin-->
 <script type="text/javascript" src="{{asset('dashboard/js/plugins/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('dashboard/js/plugins/dataTables.bootstrap.min.js')}}"></script>
-<script type="text/javascript">
-    $('#sampleTable').DataTable();
-</script>
+<script type="text/javascript" src="{{asset('vendor/datatables/buttons.server-side.js')}}"></script>
+<script type="text/javascript" src="{{asset('dashboard/js/plugins/dataTables.buttons.min.js')}}"></script>
 <!-- CkEditor -->
 <script src="{{asset('dashboard/js/plugins/ckeditor/ckeditor.js')}}"></script>
 @if(session()->has('message'))

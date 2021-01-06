@@ -30,7 +30,6 @@ class BaseModel extends Model
     public function getStatus() {
         return $this->status == 1 ? 'Active' : 'InActive';
     }
-
     /**
      * Get avatar attribute value.
      */

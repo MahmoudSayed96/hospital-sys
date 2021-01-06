@@ -18,6 +18,11 @@ class Stock extends BaseModel
         return $query->where('type' , 1);
     }
 
+    // Selection.
+    public function scopeSelection($query) {
+        return $query->select(['id', 'name', 'quantity', 'price', 'serial_no', 'type']);
+    }
+
     /**
      * Get stock type attribute value.
      */

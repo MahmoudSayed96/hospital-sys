@@ -16,4 +16,9 @@ class Department extends BaseModel
     public function users() {
         return $this->hasMany(User::class);
     }
+
+    // Selection.
+    public function scopeSelection($query) {
+        return $query->select(['id', 'name','description','status']);
+    }
 }
